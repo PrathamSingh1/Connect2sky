@@ -10,18 +10,21 @@ import cors from 'cors';
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = connectToSocket(server);
+import connectToSocket from './controllers/socketManger.js';
 
 
 app.set("port", (process.env.PORT || 8000))
+app.use(cors());
+app.use(express.json({limit: "40kb"}));
+app.use(express.urlencoded({limit: "40kb", extended: true}));
 
-
-app.get("/home", (req, res) => {
-    return res.json({"hello": "World"})
-});
 
 const start = async () => {
-    app.listen(8000, () => {
+    app.set("mongo_user")
+    const connectionDb = await mongoose.connect("mongodb+srv://connect2sky:YZHZQb7hSM7VmLJT@cluster0.ibkfimk.mongodb.net/Connect2sky")
+    
+    server.listen(app.get("port"), () => {
         console.log("LISTENING ON PORT 8000 ")
     });
 }
