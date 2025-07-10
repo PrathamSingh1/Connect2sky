@@ -12,14 +12,19 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
+}
+
+.landingPageContainer .navHeader h2 {
     cursor: pointer;
 }
 
 .landingPageContainer nav {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding-inline: 1.2rem;
+  padding-block: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 .landingPageContainer nav h2 {
@@ -30,4 +35,35 @@
     display: flex;
     gap: 1.6rem;
     cursor: pointer;
+}
+
+.landingMainContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 3rem;
+    height: 80vh;
+    align-items: center;
+}
+
+.landingMainContainer .mobile img {
+    height: 70vh;
+    width: auto;
+}
+
+.landingMainContainer .hero-heading h1 {
+    font-size: 55px;
+    
+}
+
+.landingMainContainer .hero-heading .btn {
+    background-color: #725CAD;
+    width: fit-content;
+    padding: 1rem;
+    border-radius: 30px;
+    margin-top: 50px;
+}
+
+.landingMainContainer .hero-heading .btn a {
+    text-decoration: none;
+    
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   return (
@@ -17,8 +18,16 @@ const Landing = () => {
         </nav>
 
         <div className="landingMainContainer">
-            <div></div>
-            <div></div>
+            <div className='hero-heading'>
+                <h1><span style={{color: "#725CAD"}}>Connect</span> to your loved once</h1>
+                <p>Cover a distance by Connect2sky</p>
+                <div role='button' className='btn'>
+                    <Link to={"/home"}>Get Started</Link>
+                </div>
+            </div>
+            <div className='mobile'>
+                <img src="/mobile.png" alt="" />
+            </div>
         </div>
     </div>
   )
