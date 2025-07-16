@@ -67,3 +67,10 @@
     text-decoration: none;
     
 }
+
+/* Auth Page */
+
+.css-17n6u9-MuiGrid-root{
+    min-width: 50%;
+    width: 50%;
+}

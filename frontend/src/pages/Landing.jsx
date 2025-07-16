@@ -22,7 +22,7 @@ const Landing = () => {
                 <h1><span style={{color: "#725CAD"}}>Connect</span> to your loved once</h1>
                 <p>Cover a distance by Connect2sky</p>
                 <div role='button' className='btn'>
-                    <Link to={"/home"}>Get Started</Link>
+                    <Link to={"/auth"}>Get Started</Link>
                 </div>
             </div>
             <div className='mobile'>
