@@ -37,7 +37,8 @@ export default function Authentication() {
    let handleAuth = async () => {
     try {
       if (formState === 0) {
-        // TODO: Add login here
+        
+        let result = await handleLogin(username, password)
       }
       if (formState === 1) {
         let result = await handleRegister(name, username, password);
@@ -107,6 +108,7 @@ export default function Authentication() {
                 fullWidth
                 id="username"
                 label="FullName"
+                value={name}
                 name="username"
                 autoComplete="username"
                 autoFocus
@@ -120,7 +122,7 @@ export default function Authentication() {
                 id="username"
                 label="Username"
                 name="username"
-                autoComplete="username"
+                value={username}
                 autoFocus
                 onChange={(e) =>setUsername(e.target.value)}
 
@@ -131,9 +133,9 @@ export default function Authentication() {
                 fullWidth
                 name="password"
                 label="Password"
+                value={password}
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 onChange={(e) =>setPassword(e.target.value)}
 
               />
