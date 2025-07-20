@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import Snackbar from '@mui/material/Snackbar';
 
 
 
@@ -26,29 +27,36 @@ export default function Authentication() {
     const [password, setPassword] = useState();
     const [name, setName] = useState();
     const [error, setError] = useState();
-    const [messages, setMessages] = useState();
+    const [message, setMessage] = useState();
 
     const [formState, setFormState] = useState(0);
     const [open, setOpen] = useState(false);
 
     const {handleRegister, handleLogin} = useContext(AuthContext);
 
-    let handleAuth = async () => {
-      try {
-        if(formState === 0) {
-
-        }
-        if(formState === 1) {
-          let result = await handleRegister(name, username, password);
-          console.log(result);
-          setMessages(result);
-          setOpen(true);
-        }
-      } catch(err) {
-        let message = (err.response.data.message);
-        setError(message);
+   let handleAuth = async () => {
+    try {
+      if (formState === 0) {
+        // TODO: Add login here
       }
+      if (formState === 1) {
+        let result = await handleRegister(name, username, password);
+        console.log(result);
+        setUsername("");
+        setMessage(result);
+        setOpen(true);
+        setError("");
+        setFormState(0);
+        setPassword("")
+      }
+    } catch (err) {
+      console.error(err); 
+
+      const message =
+        err?.response?.data?.message || "Something went wrong. Please try again.";
+      setError(message);
     }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -129,23 +137,27 @@ export default function Authentication() {
                 onChange={(e) =>setPassword(e.target.value)}
 
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              
+              <p style={{color: "red"}}>{error}</p>
               <Button
                 type="button"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={handleAuth}
               >
-                Sign In
+                {formState === 0 ? "Login" : "Register"}
               </Button>
               
             </Box>
           </Box>
         </Grid>
       </Grid>
+                <Snackbar
+                open={open}
+                autoHideDuration={4}
+                message={message}
+                />
     </ThemeProvider>
   );
 }
