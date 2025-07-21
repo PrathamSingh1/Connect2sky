@@ -17,20 +17,22 @@ export const connectToSocket = (server) => {
     });
 
     io.on("connection", (socket) => {
+
+        console.log("SOMETHING CONNECTED")
         
         socket.on("join-call", (path) => {
             if(connections[path] === undefined) {
-
+                connections[path] = []
             }
             connections[path].push(socket.id)
 
             timeOnline[socket.id] = new Date();
 
-            for(let a = 0; a < connections[path].length; i++) {
+            for(let a = 0; a < connections[path].length; a++) {
                 io.to(connections[path][a]).emit("user-joined", socket.id, connections[path])
             }
 
-            if (messages[paht] != undefined) {
+            if (messages[path] != undefined) {
                 for (let a = 0; a < messages[path].length; ++a) {
                     io.to(socket.id).emit("chat-message", messages[paht][a]['data'],
                         messages[path][a]['sender'], messages[path][a]['socket-id-sender'])
