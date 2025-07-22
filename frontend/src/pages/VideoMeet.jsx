@@ -163,7 +163,59 @@ const VideoMeet = () => {
               socketRef.current.emit("signal", socketListId, JSON.stringify(({'ice': event.canditate})))
             }
           }
+
+          connections[socketListId].onaddstream = (event) => {
+            let videoExists = videoRef.current.find(video => video.socketId === socketListId);
+
+            if(videoExists) {
+              setVideo(video =>{
+                const updatedVideos = video.map(video => 
+                  video.socketId === socketListId ? { ...video, stream: event.stream } : video
+                );
+                video.current = updatedVideos;
+                return updatedVideos;
+              })
+            } else {
+              let newVideo = {
+                socketId: socketListId,
+                stream: event.stream,
+                autoPlay: true,
+                playsinline: true
+              }
+
+              setVideo(videos=> {
+                const updatedVideos = [ ...videos, newVideo];
+                videoRef.current = updatedVideos;
+                return updatedVideos;
+              });
+            }
+          };
+
+          if(window.localStream === undefined && window.localStream !== null) {
+            connections[socketListId].addStream(window.localStream);
+          } else {
+            // TODO BLACKSILENCE
+          }
+
         })
+
+        if (id === socketIdRef.current) {
+          for (let id2 in connections) {
+            if(id2 === socketIdRef.current) continue
+
+            try {
+              connections[id2].addStream(window.localStream)
+            } catch (e) {
+              connections[id2].createOffer().then((description) => {
+                connections[id2].setLocalDescription(description)
+                .then(() => {
+                  socketRef.current.emit("signal", id2, JSON.stringify({ "sdp": connections[id2].setLocalDescription}))
+                })
+                .catch(e => console.log(e));
+              })
+            }
+          }
+        }
       })
     })
   }
